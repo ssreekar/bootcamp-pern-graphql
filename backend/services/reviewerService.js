@@ -9,53 +9,34 @@ import db from "../models/index";
  * separation of concerns leads to maintainable code as the application grows, and also makes the code easier to unit test
  */
 
-async function getRestaurant(id) {
+async function getReviewer(id) {
   /**
    * Restaurant is a Sequelize model, so we can use Sequelize methods like findByPk (find by primary key)
    * view the Sequelize v6 docs at https://sequelize.org/master/index.html for more available methods
    */
-  return await db.Restaurant.findByPk(id);
+  return await db.Reviewer.findByPk(id);
 }
 
-async function getRestaurants() {
-  return await db.Restaurant.findAll();
+async function getReviewers() {
+  return await db.Reviewer.findAll();
 }
 
-async function createRestaurant(
-  name,
-  address,
-  type,
-  budget,
-  description,
-  rating
-) {
-  return await db.Restaurant.create({
-    name,
-    address,
-    type,
-    budget,
-    description,
-    rating,
+async function createReviewer(firstName, lastName, location, age) {
+  return await db.Reviewer.create({
+    firstName,
+    lastName,
+    location,
+    age,
   });
 }
 
-async function updateRestaurant(
-  id,
-  name,
-  address,
-  type,
-  budget,
-  description,
-  rating
-) {
-  const updateResult = await db.Restaurant.update(
+async function updateReviewer(id, firstName, lastName, location, age) {
+  const updateResult = await db.Reviewer.update(
     {
-      name,
-      address,
-      type,
-      budget,
-      description,
-      rating,
+      firstName,
+      lastName,
+      location,
+      age,
     },
     {
       returning: true,
@@ -74,8 +55,8 @@ async function updateRestaurant(
   }
 }
 
-async function deleteRestaurant(id) {
-  const deleteResult = await db.Restaurant.destroy({
+async function deleteReviewer(id) {
+  const deleteResult = await db.Reviewer.destroy({
     where: { id: id },
   });
 
@@ -86,11 +67,11 @@ async function deleteRestaurant(id) {
   }
 }
 
-const restaurantService = {
-  getRestaurant,
-  getRestaurants,
-  createRestaurant,
-  updateRestaurant,
-  deleteRestaurant,
+const reviewerService = {
+  getReviewer,
+  getReviewers,
+  createReviewer,
+  updateReviewer,
+  deleteReviewer,
 };
-export default restaurantService;
+export default reviewerService;
